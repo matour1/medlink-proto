@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>MedLink – Maquettes Professionnelles</title>
+  <!-- Bootstrap 5 CSS -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Google Fonts Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1d7e8c;
+      --primary-dark: #0a5e6b;
+      --secondary: #2c3e50;
+      --accent: #16a085;
+      --bg-light: #f4f7fc;
+      --card-bg: #ffffff;
+      --text-dark: #1e2a3e;
+      --text-muted: #6c757d;
+      --border-radius: 1rem;
+      --shadow-sm: 0 8px 20px rgba(0,0,0,0.06);
+      --shadow-hover: 0 16px 32px rgba(0,0,0,0.1);
+      --transition: 0.2s ease-in-out;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #e8edf2 0%, #f4f7fc 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .maquette-switcher {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-switch {
+      padding: 0.8rem 2rem;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      border: none;
+    }
+    .btn-switch.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 8px 20px rgba(29,126,140,0.4);
+    }
+    .btn-switch:not(.active) {
+      background: white;
+      color: var(--text-dark);
+    }
+    .btn-switch:hover {
+      transform: translateY(-2px);
+    }
+    /* Cadre téléphone amélioré */
+    .phone-frame {
+      width: 400px;
+      max-width: 100%;
+      height: 820px;
+      background: var(--card-bg);
+      border-radius: 48px;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      border: 8px solid #1a1e2b;
+      position: relative;
+    }
+    .phone-notch {
+      width: 150px;
+      height: 25px;
+      background: #1a1e2b;
+      border-radius: 0 0 20px 20px;
+      margin: 0 auto;
+    }
+    .phone-screen {
+      flex: 1;
+      overflow-y: auto;
+      background: #f9fafc;
+      padding: 16px;
+    }
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: white;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      font-weight: 700;
+    }
+    .bottom-nav {
+      background: white;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      backdrop-filter: blur(10px);
+    }
+    .bottom-nav .nav-item {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .bottom-nav .nav-item i {
+      font-size: 1.4rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .bottom-nav .nav-item.active {
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+    /* Cartes */
+    .card-stat {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.2rem;
+      box-shadow: var(--shadow-sm);
+      border: none;
+      transition: var(--transition);
+      height: 100%;
+    }
+    .card-stat:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .icon-bg {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(29,126,140,0.1);
+      color: var(--primary);
+    }
+    .badge-soft {
+      background: #e9f3f5;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+    /* Portail hôpital */
+    .portal-wrapper {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .sidebar-hospital {
+      background: linear-gradient(180deg, #1e2a3e 0%, #15212e 100%);
+      color: white;
+      min-height: 100%;
+      padding: 2rem 1rem;
+    }
+    .sidebar-hospital .nav-link {
+      color: rgba(255,255,255,0.7);
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .sidebar-hospital .nav-link:hover, .sidebar-hospital .nav-link.active {
+      background: rgba(255,255,255,0.15);
+      color: white;
+    }
+    .dashboard-content {
+      padding: 1.5rem;
+      background: #f8fafc;
+      min-height: 80vh;
+    }
+    .metric-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border-left: 6px solid var(--primary);
+    }
+    .progress-custom {
+      height: 10px;
+      border-radius: 20px;
+    }
+    /* Graphiques */
+    canvas {
+      max-width: 100%;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .phone-frame {
+        width: 100%;
+        height: auto;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container-fluid">
+  <!-- Commutateur principal -->
+  <div class="maquette-switcher">
+    <button class="btn-switch active" id="showApp"><i class="fas fa-mobile-alt me-2"></i>Application Mobile Patient</button>
+    <button class="btn-switch" id="showPortal"><i class="fas fa-hospital me-2"></i>Portail Hôpital</button>
+  </div>
+
+  <!-- SECTION APPLICATION MOBILE -->
+  <div id="appSection">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="app-header">
+        <span id="screenTitle" class="fs-5">Tableau de bord</span>
+        <div>
+          <i class="fas fa-bell text-muted me-2"></i>
+          <img src="https://ui-avatars.com/api/?name=Jeanne+D&background=1d7e8c&color=fff&size=32" class="rounded-circle" width="32" height="32" alt="avatar">
+        </div>
+      </div>
+      <div class="phone-screen" id="appScreenContainer"></div>
+      <div class="bottom-nav">
+        <div class="nav-item active" data-screen="dashboard"><i class="fas fa-th-large"></i> Accueil</div>
+        <div class="nav-item" data-screen="carnet"><i class="fas fa-notes-medical"></i> Carnet</div>
+        <div class="nav-item" data-screen="ordonnances"><i class="fas fa-prescription"></i> Ordo</div>
+        <div class="nav-item" data-screen="suivi"><i class="fas fa-heartbeat"></i> Suivi</div>
+        <div class="nav-item" data-screen="partage"><i class="fas fa-shield-alt"></i> Partage</div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <button class="btn btn-sm btn-outline-secondary rounded-pill" data-screen="rappels"><i class="fas fa-bell me-1"></i> Rappels</button>
+    </div>
+  </div>
+
+  <!-- SECTION PORTAIL HÔPITAL -->
+  <div id="portalSection" style="display: none;">
+    <div class="portal-wrapper row g-0">
+      <div class="col-lg-2 col-md-3 sidebar-hospital d-flex flex-column">
+        <h5 class="text-center mb-4 fw-bold">🏥 MedLink Pro</h5>
+        <nav class="nav flex-column">
+          <a class="nav-link active" data-portal="dashboard" href="#"><i class="fas fa-tachometer-alt me-2"></i> Tableau de bord</a>
+          <a class="nav-link" data-portal="patient" href="#"><i class="fas fa-user-injured me-2"></i> Dossier patient</a>
+          <a class="nav-link" data-portal="enregistrer" href="#"><i class="fas fa-user-plus me-2"></i> Enregistrer patient</a>
+          <a class="nav-link" data-portal="rendezvous" href="#"><i class="fas fa-calendar-alt me-2"></i> Rendez-vous</a>
+          <a class="nav-link" data-portal="historique" href="#"><i class="fas fa-history me-2"></i> Historique</a>
+          <a class="nav-link" data-portal="consentements" href="#"><i class="fas fa-check-circle me-2"></i> Consentements</a>
+        </nav>
+        <div class="mt-auto text-white-50 small p-3">
+          <i class="fas fa-circle text-success me-1"></i> Dr. Marie Kamga<br>Urgences - Hôpital Central
+        </div>
+      </div>
+      <div class="col-lg-10 col-md-9 dashboard-content" id="portalScreenContainer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  (function() {
+    // ----- ÉCRANS APPLICATION MOBILE (améliorés) -----
+    const appScreens = {
+      dashboard: `
+        <div class="mb-3">
+          <div class="card-stat bg-primary text-white mb-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="fw-bold">Bonjour, Jeanne 👋</h6>
+                <small>Votre santé est notre priorité</small>
+              </div>
+              <i class="fas fa-heartbeat fs-3 opacity-50"></i>
+            </div>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-6"><div class="card-stat p-2 text-center"><i class="fas fa-clock fs-4 text-primary mb-1"></i><br><strong>Prochain rappel</strong><br><small>14:00 - Paracétamol</small></div></div>
+            <div class="col-6"><div class="card-stat p-2 text-center"><i class="fas fa-calendar-check fs-4 text-success mb-1"></i><br><strong>RDV à venir</strong><br><small>Demain 10h - Dr. Njoya</small></div></div>
+          </div>
+          <div class="row g-2">
+            <div class="col-4"><div class="card-stat p-3 text-center"><i class="fas fa-folder-open fs-3 text-primary"></i><br><small>Carnet</small></div></div>
+            <div class="col-4"><div class="card-stat p-3 text-center"><i class="fas fa-pills fs-3 text-warning"></i><br><small>Ordonnances</small></div></div>
+            <div class="col-4"><div class="card-stat p-3 text-center"><i class="fas fa-chart-line fs-3 text-info"></i><br><small>Suivi</small></div></div>
+            <div class="col-4"><div class="card-stat p-3 text-center"><i class="fas fa-bell fs-3 text-danger"></i><br><small>Rappels</small></div></div>
+            <div class="col-4"><div class="card-stat p-3 text-center"><i class="fas fa-shield-alt fs-3 text-success"></i><br><small>Partage</small></div></div>
+            <div class="col-4"><div class="card-stat p-3 text-center"><i class="fas fa-camera fs-3 text-secondary"></i><br><small>Scanner</small></div></div>
+          </div>
+          <div class="mt-3 alert alert-info border-0 rounded-4 shadow-sm">🔔 N'oubliez pas votre prise de médicament dans 2 heures.</div>
+        </div>
+      `,
+      carnet: `
+        <h5 class="fw-bold mb-3"><i class="fas fa-notes-medical me-2 text-primary"></i>Carnet de santé</h5>
+        <div class="accordion" id="carnetAccordion">
+          <div class="accordion-item border-0 mb-2 shadow-sm rounded-3">
+            <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">Informations personnelles</button></h2>
+            <div id="c1" class="accordion-collapse collapse show"><div class="accordion-body"><p><strong>Groupe sanguin :</strong> O+</p><p><strong>Allergies :</strong> Pénicilline</p><p><strong>Vaccins :</strong> DT Polio, Hépatite B</p></div></div>
+          </div>
+          <div class="accordion-item border-0 mb-2 shadow-sm rounded-3">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">Antécédents médicaux</button></h2>
+            <div id="c2" class="accordion-collapse collapse"><div class="accordion-body">Hypertension depuis 2018<br>Appendicectomie en 2015</div></div>
+          </div>
+          <div class="accordion-item border-0 mb-2 shadow-sm rounded-3">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">Résultats d'analyses</button></h2>
+            <div id="c3" class="accordion-collapse collapse"><div class="accordion-body"><span class="badge bg-success me-2">Normal</span> Glycémie : 0.95 g/L (12/05/2025)</div></div>
+          </div>
+        </div>
+        <button class="btn btn-outline-primary rounded-pill w-100 mt-3"><i class="fas fa-plus me-1"></i> Ajouter un document</button>
+        <p class="text-muted small mt-2"><i class="fas fa-sync-alt me-1"></i> Synchronisé aujourd'hui à 09:12</p>
+      `,
+      ordonnances: `
+        <h5 class="fw-bold mb-3"><i class="fas fa-prescription me-2 text-warning"></i>Ordonnances</h5>
+        <div class="list-group shadow-sm rounded-3">
+          <div class="list-group-item border-0 mb-2 rounded-3"><div class="d-flex justify-content-between"><strong>Dr. Njoya</strong><small class="text-muted">15/05/2025</small></div><small>Amoxicilline 500mg, 3x/jour</small><span class="badge bg-success">En cours</span></div>
+          <div class="list-group-item border-0 mb-2 rounded-3"><div class="d-flex justify-content-between"><strong>Dr. Fotso</strong><small class="text-muted">02/04/2025</small></div><small>Paracétamol, Ibuprofène</small><span class="badge bg-secondary">Terminée</span></div>
+        </div>
+        <div class="card-stat mt-3 p-3">
+          <h6>Détail : Amoxicilline</h6>
+          <p>Posologie : 1 gélule matin, midi et soir</p>
+          <div class="d-flex justify-content-around mb-2">
+            <span class="badge bg-success p-2">Matin ✔️</span>
+            <span class="badge bg-light text-dark p-2">Midi</span>
+            <span class="badge bg-light text-dark p-2">Soir</span>
+          </div>
+          <button class="btn btn-sm btn-outline-success rounded-pill"><i class="fas fa-qrcode me-1"></i> Partager avec pharmacie</button>
+        </div>
+      `,
+      suivi: `
+        <h5 class="fw-bold mb-3"><i class="fas fa-heartbeat me-2 text-info"></i>Suivi médical</h5>
+        <div class="card-stat p-3 mb-3">
+          <h6>Tension artérielle (mmHg)</h6>
+          <canvas id="chartTensionMobile" height="120"></canvas>
+        </div>
+        <div class="card-stat p-3 mb-3">
+          <h6>Prochains rendez-vous</h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0"><i class="fas fa-circle text-primary me-2 small"></i>Dr. Njoya - 25 mai 2025 10:00</li>
+            <li class="list-group-item border-0"><i class="fas fa-circle text-warning me-2 small"></i>Cardiologue - 03 juin 2025 15:30</li>
+          </ul>
+        </div>
+        <button class="btn btn-outline-info rounded-pill w-100"><i class="fas fa-plus me-1"></i> Ajouter une mesure</button>
+      `,
+      partage: `
+        <h5 class="fw-bold mb-3"><i class="fas fa-shield-alt me-2 text-success"></i>Gestion des accès</h5>
+        <div class="list-group mb-3 shadow-sm rounded-3">
+          <div class="list-group-item border-0"><div class="d-flex justify-content-between"><strong>Dr. Njoya</strong> <span class="badge bg-success">Actif</span></div><small>Accès complet jusqu'au 30/06/2025</small></div>
+          <div class="list-group-item border-0"><div class="d-flex justify-content-between"><strong>Maman (proche)</strong> <span class="badge bg-success">Actif</span></div><small>Accès limité au carnet</small></div>
+        </div>
+        <button class="btn btn-success rounded-pill w-100 mb-3"><i class="fas fa-user-plus me-1"></i> Accorder un accès</button>
+        <div class="card-stat p-3">
+          <h6>Historique des consultations</h6>
+          <ul class="list-group list-group-flush small">
+            <li class="list-group-item border-0">20/05 14:30 - Dr. Njoya (carnet, ordo)</li>
+            <li class="list-group-item border-0">18/05 09:15 - Urgences Laquintinie (allergies)</li>
+          </ul>
+        </div>
+      `,
+      rappels: `
+        <h5 class="fw-bold mb-3"><i class="fas fa-bell me-2 text-danger"></i>Rappels</h5>
+        <div class="list-group shadow-sm rounded-3 mb-3">
+          <div class="list-group-item border-0 d-flex justify-content-between"><span>💊 Paracétamol 500mg</span><span>08:00, 14:00, 20:00</span><span class="badge bg-success">Actif</span></div>
+          <div class="list-group-item border-0 d-flex justify-content-between"><span>🔄 Renouveler ordonnance</span><span>30/05/2025</span><span class="badge bg-warning text-dark">À venir</span></div>
+        </div>
+        <button class="btn btn-outline-danger rounded-pill w-100"><i class="fas fa-plus me-1"></i> Nouveau rappel</button>
+      `
+    };
+
+    // ----- ÉCRANS PORTAIL HÔPITAL (enrichis) -----
+    const portalScreens = {
+      dashboard: `
+        <h4 class="fw-bold mb-4">Tableau de bord</h4>
+        <div class="row g-3">
+          <div class="col-md-3"><div class="metric-card"><h3 class="fw-bold">24</h3><small class="text-muted">Consultations aujourd'hui</small><div class="progress mt-2 progress-custom"><div class="progress-bar bg-primary" style="width:70%"></div></div></div></div>
+          <div class="col-md-3"><div class="metric-card"><h3 class="fw-bold">5</h3><small class="text-muted">Nouveaux patients</small></div></div>
+          <div class="col-md-3"><div class="metric-card"><h3 class="fw-bold">3</h3><small class="text-muted">Demandes consentement</small></div></div>
+          <div class="col-md-3"><div class="metric-card"><h3 class="fw-bold">98%</h3><small class="text-muted">Disponibilité</small></div></div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-6"><div class="card-stat p-3"><h6>Activité des consultations (7 jours)</h6><canvas id="chartActivite" height="200"></canvas></div></div>
+          <div class="col-md-6"><div class="card-stat p-3"><h6>Derniers patients consultés</h6><ul class="list-group list-group-flush"><li class="list-group-item">Jeanne D. - 20/05 14:30 <button class="btn btn-sm btn-link voir-dossier">Voir</button></li><li class="list-group-item">Paul M. - 19/05 10:15 <button class="btn btn-sm btn-link voir-dossier">Voir</button></li></ul></div></div>
+        </div>
+      `,
+      patient: `
+        <div class="d-flex justify-content-between align-items-center mb-3"><h4 class="fw-bold">Dossier Patient</h4><span class="badge bg-success p-2">Consentement actif</span></div>
+        <div class="card-stat p-3 mb-3"><h5>Jeanne D.</h5><p>34 ans | O+ | <span class="text-danger fw-bold">Allergie : Pénicilline</span></p></div>
+        <ul class="nav nav-tabs mb-3">
+          <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#tab-synthese">Synthèse</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-carnet">Carnet</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#tab-ordo">Ordonnances</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab-synthese"><p>Traitement en cours : Amoxicilline<br>Dernière tension : 12/8 mmHg</p></div>
+          <div class="tab-pane fade" id="tab-carnet"><p>Vaccins : DT Polio, Hépatite B<br>Antécédents : Hypertension</p></div>
+          <div class="tab-pane fade" id="tab-ordo"><p>Ordonnance du 15/05/2025 - Amoxicilline 500mg</p></div>
+        </div>
+        <button class="btn btn-outline-secondary rounded-pill mt-3"><i class="fas fa-download me-1"></i> Télécharger PDF</button>
+      `,
+      enregistrer: `
+        <h4 class="fw-bold mb-4"><i class="fas fa-user-plus me-2"></i>Enregistrer un nouveau patient</h4>
+        <div class="card-stat p-4">
+          <form>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label">Nom complet</label><input type="text" class="form-control" placeholder="Nom et prénom"></div>
+              <div class="col-md-6"><label class="form-label">Date de naissance</label><input type="date" class="form-control"></div>
+              <div class="col-md-4"><label class="form-label">Groupe sanguin</label><select class="form-select"><option>O+</option><option>A+</option><option>B+</option></select></div>
+              <div class="col-md-4"><label class="form-label">Téléphone</label><input type="tel" class="form-control" placeholder="+237 ..."></div>
+              <div class="col-md-4"><label class="form-label">Email</label><input type="email" class="form-control"></div>
+              <div class="col-12"><label class="form-label">Allergies connues</label><input type="text" class="form-control" placeholder="ex: Pénicilline, Arachides"></div>
+              <div class="col-12"><button class="btn btn-primary rounded-pill px-4"><i class="fas fa-save me-1"></i> Enregistrer</button></div>
+            </div>
+          </form>
+        </div>
+      `,
+      rendezvous: `
+        <h4 class="fw-bold mb-4"><i class="fas fa-calendar-alt me-2"></i>Gestion des rendez-vous</h4>
+        <div class="row">
+          <div class="col-md-5"><div class="card-stat p-3"><h6>Agenda du jour</h6><ul class="list-group list-group-flush"><li class="list-group-item">10:00 - Jeanne D. (consultation)</li><li class="list-group-item">11:30 - Paul M. (suivi)</li><li class="list-group-item">14:00 - Nouveau patient</li></ul></div></div>
+          <div class="col-md-7"><div class="card-stat p-3"><h6>Planifier un rendez-vous</h6><div class="row g-2"><div class="col-md-6"><label>Patient</label><select class="form-select"><option>Jeanne D.</option><option>Paul M.</option></select></div><div class="col-md-6"><label>Date</label><input type="date" class="form-control"></div><div class="col-md-6"><label>Heure</label><input type="time" class="form-control"></div><div class="col-md-6"><label>Motif</label><input type="text" class="form-control"></div><div class="col-12 mt-2"><button class="btn btn-primary rounded-pill"><i class="fas fa-plus me-1"></i> Créer</button></div></div></div></div>
+        </div>
+      `,
+      historique: `
+        <h4 class="fw-bold mb-4"><i class="fas fa-history me-2"></i>Historique des accès</h4>
+        <table class="table table-hover bg-white rounded-3 shadow-sm">
+          <thead><tr><th>Date</th><th>Utilisateur</th><th>Patient</th><th>Action</th></tr></thead>
+          <tbody><tr><td>20/05/2025 14:30</td><td>Dr. Marie</td><td>Jeanne D.</td><td>Consultation dossier</td></tr><tr><td>19/05/2025 09:15</td><td>Inf. Paul</td><td>Jeanne D.</td><td>Vue allergies</td></tr></tbody>
+        </table>
+        <button class="btn btn-outline-primary rounded-pill"><i class="fas fa-download me-1"></i> Exporter CSV</button>
+      `,
+      consentements: `
+        <h4 class="fw-bold mb-4"><i class="fas fa-check-circle me-2"></i>Demandes de consentement</h4>
+        <div class="list-group shadow-sm rounded-3">
+          <div class="list-group-item border-0 d-flex justify-content-between"><span>Demande à Jeanne D. (accès complet)</span><span class="text-warning">En attente</span><button class="btn btn-sm btn-outline-secondary rounded-pill">Relancer</button></div>
+          <div class="list-group-item border-0 d-flex justify-content-between"><span>Dr. Njoya (QR code)</span><span class="text-success">Accepté</span></div>
+        </div>
+        <button class="btn btn-primary rounded-pill mt-3"><i class="fas fa-qrcode me-1"></i> Générer QR code consentement</button>
+      `
+    };
+
+    // Gestion affichage sections
+    const appSection = document.getElementById('appSection');
+    const portalSection = document.getElementById('portalSection');
+    document.getElementById('showApp').addEventListener('click', function(){
+      appSection.style.display = 'block';
+      portalSection.style.display = 'none';
+      this.classList.add('active');
+      document.getElementById('showPortal').classList.remove('active');
+    });
+    document.getElementById('showPortal').addEventListener('click', function(){
+      appSection.style.display = 'none';
+      portalSection.style.display = 'block';
+      this.classList.add('active');
+      document.getElementById('showApp').classList.remove('active');
+      // Charger tableau de bord hôpital
+      document.getElementById('portalScreenContainer').innerHTML = portalScreens.dashboard;
+      initChartActivite();
+      attachVoirDossierEvents();
+    });
+
+    // Gestion app mobile
+    const screenTitle = document.getElementById('screenTitle');
+    const appContainer = document.getElementById('appScreenContainer');
+    function loadAppScreen(id) {
+      if (appScreens[id]) {
+        appContainer.innerHTML = appScreens[id];
+        screenTitle.textContent = id === 'dashboard' ? 'Tableau de bord' : id.charAt(0).toUpperCase() + id.slice(1);
+        if (id === 'suivi') initChartTensionMobile();
+      }
+    }
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+      item.addEventListener('click', function(){
+        document.querySelectorAll('.bottom-nav .nav-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+        loadAppScreen(this.dataset.screen);
+      });
+    });
+    document.querySelectorAll('.toggle-screen-btn').forEach(btn => {
+      btn.addEventListener('click', function(){
+        loadAppScreen(this.dataset.screen);
+      });
+    });
+
+    // Gestion portail hôpital
+    const portalContainer = document.getElementById('portalScreenContainer');
+    function loadPortalScreen(screen) {
+      if (portalScreens[screen]) {
+        portalContainer.innerHTML = portalScreens[screen];
+        if (screen === 'dashboard') {
+          initChartActivite();
+          attachVoirDossierEvents();
+        }
+      }
+    }
+    document.querySelectorAll('.sidebar-hospital .nav-link').forEach(link => {
+      link.addEventListener('click', function(e){
+        e.preventDefault();
+        document.querySelectorAll('.sidebar-hospital .nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        loadPortalScreen(this.dataset.portal);
+      });
+    });
+
+    function attachVoirDossierEvents() {
+      document.querySelectorAll('.voir-dossier').forEach(btn => {
+        btn.addEventListener('click', function(){
+          document.querySelectorAll('.sidebar-hospital .nav-link').forEach(l => l.classList.remove('active'));
+          document.querySelector('[data-portal="patient"]').classList.add('active');
+          loadPortalScreen('patient');
+        });
+      });
+    }
+
+    // Graphiques
+    function initChartTensionMobile() {
+      setTimeout(() => {
+        const ctx = document.getElementById('chartTensionMobile');
+        if (ctx && !ctx.chart) {
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: ['Jan','Fév','Mar','Avr','Mai'],
+              datasets: [{
+                label: 'Systolique',
+                data: [135,130,128,125,122],
+                borderColor: '#1d7e8c',
+                backgroundColor: 'rgba(29,126,140,0.1)',
+                tension: 0.3,
+                fill: true
+              }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+          });
+        }
+      }, 300);
+    }
+
+    function initChartActivite() {
+      setTimeout(() => {
+        const ctx = document.getElementById('chartActivite');
+        if (ctx && !ctx.chart) {
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
+              datasets: [{
+                label: 'Consultations',
+                data: [5, 8, 6, 9, 7, 3, 2],
+                backgroundColor: '#1d7e8c',
+                borderRadius: 8
+              }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+          });
+        }
+      }, 300);
+    }
+
+    // Chargement initial
+    loadAppScreen('dashboard');
+    portalContainer.innerHTML = portalScreens.dashboard; // préchargement
+  })();
+</script>
+</body>
+</html>
